@@ -4,6 +4,7 @@ const express = require('express')
 const app = express()
 
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 
 // parse application/x-www-form-urlencoded
@@ -12,39 +13,17 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-// resource
+// import users service
+app.use(require('./routes/users'));
 
-app.get('/usuarios/:id', function (request, response) {
-    response.json('LOCAL!');
-})
+// mongoose connect 
+mongoose.connect(process.env.URL_DB,
+    { useNewUrlParser: true, useCreateIndex: true },
+    (error, response) => {
+        if (error) throw error;
 
-// POST
-app.post('/usuarios', function (request, response) {
-
-    let body = request.body;
-
-    if (body.name === undefined) {
-        response.status(400).json({
-            ok: false,
-            message: 'Name is required'
-        });
-    } else {
-        response.json({ body })
-    }
-
-
-})
-app.put('/usuarios/:id', function (request, response) {
-
-    let id = request.params.id;
-
-    response.json({
-        id
+        console.log('MONGO ONLINE');
     });
-})
-app.delete('/usuarios/:id', function (req, res) {
-    res.json('delete usuario')
-})
 
 app.listen(process.env.PORT, () => {
     console.log('Listen on port: ', process.env.PORT);
