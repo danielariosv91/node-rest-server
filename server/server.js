@@ -15,7 +15,7 @@ app.use(bodyParser.json())
 // resource
 
 app.get('/usuarios', function (request, response) {
-    res.json('get usuario')
+    response.json('get usuario')
 })
 
 // POST
