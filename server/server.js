@@ -14,8 +14,8 @@ app.use(bodyParser.json())
 
 // resource
 
-app.get('/usuarios', function (request, response) {
-    response.json('get usuario')
+app.get('/usuarios/:id', function (request, response) {
+    response.json('LOCAL!');
 })
 
 // POST
